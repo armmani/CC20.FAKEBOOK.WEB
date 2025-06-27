@@ -1,17 +1,13 @@
 import { Outlet } from "react-router";
-import useUserStore from "../stores/userStore";
+import Header from "../components/Header";
 
 function UserLayout() {
-  const logout = useUserStore((state) => state.logout);
   return (
     <div>
-      <div className="text-4xl py-4 border">
-        Header
-        <button className="btn btn-primary" onClick={logout}>
-          LOG OUT
-        </button>
+      <Header />
+      <div className="relative flex gap-2 bg-gray-100 border pt-14">
+        <Outlet />
       </div>
-      <Outlet />
     </div>
   );
 }
