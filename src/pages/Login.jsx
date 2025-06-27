@@ -5,10 +5,12 @@ import { loginSchema } from "../utils/validators";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router";
+import useUserStore from "../stores/userStore";
+import { toast } from "react-toastify";
 
 function Login() {
   const [resetForm, setResetForm] = useState(false);
-
+  const login = useUserStore((state) => state.login);
   const navigate = useNavigate();
 
   const hdlClose = () => {
@@ -16,10 +18,16 @@ function Login() {
   };
 
   const hdlLogin = async (data) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    alert(JSON.stringify(data, null, 2));
-    document.getElementById('register-form').close()
-    reset()
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // alert(JSON.stringify(data, null, 2));
+      const resp = await login(data);
+      // document.getElementById('register-form').close()
+      // reset()
+      toast.success(resp.data.message);
+    } catch (err) {
+      const errMsg = err.response?.data?.error || err.message;
+    }
   };
 
   const {
@@ -30,8 +38,6 @@ function Login() {
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
-
-
 
   return (
     <>
@@ -70,8 +76,17 @@ function Login() {
                         {errors.password?.message}
                       </p>
                     )}
-                    {!isSubmitting && <button type="submit" className="btn btn-primary text-xl">LOG IN</button>}
-                    {isSubmitting && <button type="submit" className="btn btn-primary text-xl">LOG IN <span className="loading loading-spinner text-error loading-sm"></span></button>}
+                    {!isSubmitting && (
+                      <button type="submit" className="btn btn-primary text-xl">
+                        LOG IN
+                      </button>
+                    )}
+                    {isSubmitting && (
+                      <button type="submit" className="btn btn-primary text-xl">
+                        LOG IN{" "}
+                        <span className="loading loading-spinner text-error loading-sm"></span>
+                      </button>
+                    )}
                     <p className="text-center cursor-pointer opacity-70">
                       Forgotten Password
                     </p>

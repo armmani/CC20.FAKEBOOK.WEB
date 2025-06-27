@@ -3,10 +3,13 @@ import { useForm } from "react-hook-form";
 import { registerSchema } from "../utils/validators";
 import { useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { authApi } from "../api/authApi";
 
 function Register({ resetForm }) {
   const { handleSubmit, register, formState, reset } = useForm({
     resolver: yupResolver(registerSchema),
+    mode: 'onBlur'
   });
   const { isSubmitting, errors } = formState;
 
@@ -17,12 +20,17 @@ function Register({ resetForm }) {
   const onSubmit = async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      const resp = axios.post("http://localhost:8472/api/auth/register", data);
-      // alert(JSON.stringify(data, null, 2));
+      const resp = await authApi.post("/register", data);
+
+      console.log('resp', resp)
+      toast.success(resp.data.message)
       document.getElementById("register-form").close();
       reset();
     } catch (err) {
-      console.log(err);
+      console.log('err', err)
+      const errMsg = err.response?.data?.error || err.message
+      toast.error(errMsg)
+      // console.log(err);
     }
   };
 

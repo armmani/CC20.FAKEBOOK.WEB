@@ -5,6 +5,8 @@ import {
   Outlet,
   RouterProvider,
 } from "react-router";
+import useUserStore from "../stores/userStore";
+import UserLayout from "../layouts/UserLayout";
 // import Friends from "../pages/Friends";
 // import Login from "../pages/Login";
 // import Friend from "../pages/Friend";
@@ -27,12 +29,7 @@ const guestRouter = createBrowserRouter([
 const userRouter = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <div>
-        <div className="text-4xl py-4 border">Header</div>
-        <Outlet />
-      </div>
-    ),
+    element: <UserLayout />,
     children: [
       { index: true, element: <Home /> },
       { path: "friends", element: <Friends /> },
@@ -43,15 +40,14 @@ const userRouter = createBrowserRouter([
 ]);
 
 function AppRouter() {
-  let user = null; // ถ้ายังไม่ login จะเป็น null
-  // const [user, setUser] = useState(false);
+  const user = useUserStore((state) => state.user);
   const finalRouter = user ? userRouter : guestRouter; // ถ้ามี user ใช้ userRouter ถ้าไม่มี user เป็น guestRouter
   return (
     <Suspense fallback={<p>Loading</p>}>
       {/* <button className="btn btn-primary" onClick={() => setUser(!user)}>
         LOG IN
       </button> */}
-      <RouterProvider router={finalRouter} />
+      <RouterProvider key={user?.id} router={finalRouter} />
     </Suspense>
   );
 }
