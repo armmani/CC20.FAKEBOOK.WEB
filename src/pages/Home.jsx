@@ -1,6 +1,12 @@
+import SidebarMenu from "../components/SidebarMenu";
+
 function Home() {
   return (
-    <div>Home</div>
-  )
+    <div>
+      <SidebarMenu />
+      {/* <div>Post Container</div>
+      <div>Sidebar Contact</div> */}
+    </div>
+  );
 }
-export default Home
+export default Home;

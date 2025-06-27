@@ -68,6 +68,7 @@ function Login() {
                     )}
                     <input
                       className="input input-info w-full"
+                      type="password"
                       placeholder="Password"
                       {...register("password")}
                     />
