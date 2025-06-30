@@ -7,4 +7,3 @@ export default function isTokenExpired(token) {
     return true; // invalid token
   }
 }
-∏
