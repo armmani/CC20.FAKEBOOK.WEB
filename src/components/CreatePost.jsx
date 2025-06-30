@@ -1,3 +1,4 @@
+import { ActivityIcon, PhotoIcon, VideoIcon2 } from "../icons";
 import useUserStore from "../stores/userStore";
 import Avatar from "./Avatar";
 
@@ -12,6 +13,21 @@ function CreatePost() {
             What do you think?
           </button>
         </div>
+        <div className="divider mt-1 mb-0"></div>
+       <div className="flex gap-3">
+       <div className="flex-1 flex gap-3 justify-center cursor-pointer hover:bg-gray-800 rounded-lg py-2">
+          <VideoIcon2 className="w-6" />
+          LIVE / STREAM
+        </div>
+        <div className="flex-1 flex gap-3 justify-center cursor-pointer hover:bg-gray-800 rounded-lg py-2">
+          <PhotoIcon className="w-6" />
+          LIVE / STREAM
+        </div>
+        <div className="flex-1 flex gap-3 justify-center cursor-pointer hover:bg-gray-800 rounded-lg py-2">
+          <ActivityIcon className="w-6" />
+          LIVE / STREAM
+        </div>
+       </div>
       </div>
     </div>
   );

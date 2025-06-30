@@ -5,7 +5,7 @@ function UserLayout() {
   return (
     <div>
       <Header />
-      <div className="relative flex gap-2 bg-gray-500 pt-14">
+      <div className="relative flex gap-2 pt-14">
         <Outlet />
       </div>
     </div>
