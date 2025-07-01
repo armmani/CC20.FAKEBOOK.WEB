@@ -4,6 +4,7 @@ import useUserStore from "../stores/userStore";
 import Avatar from "./Avatar";
 import AddPicture from "./AddPicture";
 import usePostStore from "../stores/postStore";
+import { toast } from "react-toastify";
 
 function PostForm() {
   const user = useUserStore((state) => state.user);
@@ -15,13 +16,31 @@ function PostForm() {
   const [addPic, setAddPic] = useState(false);
   const [file, setFile] = useState(null);
 
-  const hdlCreatePost = () => {
-    console.log("createPost");
+  const hdlCreatePost = async () => {
+    try {
+      const body = new FormData();
+      body.append("message", message);
+      if (file) {
+        body.append("image", file);
+      }
+      //   for (let el of body) {
+      //     console.log(el);
+      //   }
+      const resp = await createPost(body, token, user);
+      toast(resp.data.message);
+      document.getElementById('postform-modal').close()
+    } catch (err) {
+      const errMsg = err.response?.data.error || err.message
+      toast.error(errMsg)
+    }
   };
 
   return (
     <div className="flex flex-col gap-2">
-      <h3 className="text-xl text-center">Create Post</h3>
+      <h3 className="text-xl text-center">
+        Create Post
+        {loading && <span className="loading loading-dots loading-sm"></span>}
+        </h3>
       <div className="divider mt-1 mb-0"></div>
       <div className="flex gap-2">
         <Avatar className="w-11 rounded-full" imgSrc={user.profileImage} />
