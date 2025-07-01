@@ -8,7 +8,7 @@ import {
   MessengerIcon,
   NotiIcon,
   SearchIcon,
-  VideoIcon,
+  VideoIcon2,
 } from "../icons";
 import useUserStore from "../stores/userStore";
 import Avatar from "./Avatar";
@@ -36,7 +36,7 @@ function Header() {
           to="/"
           className="flex justify-center w-20 hover:outline-2 hover:outline-primary h-full py-2"
         >
-          <VideoIcon />
+          <VideoIcon2 />
         </Link>
         <Link
           to="/"

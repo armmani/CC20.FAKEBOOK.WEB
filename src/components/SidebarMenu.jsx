@@ -5,7 +5,7 @@ import {
   MemoryIcon,
   MoreIcon,
   SaveIcon,
-  VideoIcon,
+  VideoIcon2,
 } from "../icons";
 import useUserStore from "../stores/userStore";
 import Avatar from "./Avatar";
@@ -27,7 +27,7 @@ function SidebarMenu() {
       <MenuItem icon={MemoryIcon} text="Memories" className="w-10" />
       <MenuItem icon={SaveIcon} text="Save" className="w-10" />
       <MenuItem icon={GroupIcon} text="Group" className="w-10" />
-      <MenuItem icon={VideoIcon} text="Video" className="w-10" />
+      <MenuItem icon={VideoIcon2} text="Video" className="w-10" />
       <MenuItem icon={MoreIcon} text="More" className="w-10" />
     </div>
   );

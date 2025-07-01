@@ -27,6 +27,7 @@ function Login() {
       toast.success(resp.data.message);
     } catch (err) {
       const errMsg = err.response?.data?.error || err.message;
+      toast(errMsg)
     }
   };
 
