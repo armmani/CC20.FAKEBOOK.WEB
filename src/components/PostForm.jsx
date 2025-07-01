@@ -1,12 +1,24 @@
 import { useState } from "react";
-import { PhotoIcon, PhotoIcon2 } from "../icons";
+import { PhotoIcon2 } from "../icons";
 import useUserStore from "../stores/userStore";
 import Avatar from "./Avatar";
 import AddPicture from "./AddPicture";
+import usePostStore from "../stores/postStore";
 
 function PostForm() {
   const user = useUserStore((state) => state.user);
+  const token = useUserStore((state) => state.token);
+  const loading = usePostStore((state) => state.loading);
+  const createPost = usePostStore((state) => state.createPost);
+
+  const [message, setMessage] = useState("");
   const [addPic, setAddPic] = useState(false);
+  const [file, setFile] = useState(null);
+
+  const hdlCreatePost = () => {
+    console.log("createPost");
+  };
+
   return (
     <div className="flex flex-col gap-2">
       <h3 className="text-xl text-center">Create Post</h3>
@@ -27,8 +39,11 @@ function PostForm() {
       <textarea
         className="textarea textarea-ghost w-full"
         placeholder={`What do you think? ${user.firstName}`}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        rows={message.split("\n").length}
       ></textarea>
-      {addPic && <AddPicture />}
+      {addPic && <AddPicture file={file} setFile={setFile} />}
       <div className="flex justify-between border rounded-lg p-2 items-center cursor-pointer">
         <p>Add With Your Post</p>
         <div
@@ -38,7 +53,13 @@ function PostForm() {
           <PhotoIcon2 className="w-7" />
         </div>
       </div>
-      <button className="btn btn-primary">Create POST</button>
+      <button
+        className="btn btn-primary"
+        onClick={hdlCreatePost}
+        disabled={message.trim.length === 0 && !file}
+      >
+        Create POST
+      </button>
     </div>
   );
 }
